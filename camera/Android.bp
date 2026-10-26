@@ -1,0 +1,12 @@
+//
+// SPDX-FileCopyrightText: acerhizm
+// SPDX-License-Identifier: Apache-2.0
+//
+
+cc_library_static {
+    name: "libcameraservice_extension.zeus",
+    srcs: ["CameraProviderExtension.cpp"],
+    shared_libs: [
+        "liblog",
+    ],
+}

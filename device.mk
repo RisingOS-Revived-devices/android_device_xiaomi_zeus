@@ -17,6 +17,9 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/audio/resourcemanager_waipio_mtp.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio/sku_taro/resourcemanager_waipio_mtp.xml \
     $(LOCAL_PATH)/audio/usecaseKvManager.xml:$(TARGET_COPY_OUT_VENDOR)/etc/usecaseKvManager.xml
 
+# Camera: torch strength through the camera service extension
+$(call soong_config_set,libcameraservice,ext_lib,//device/xiaomi/zeus/camera:libcameraservice_extension.zeus)
+
 # Overlay
 PRODUCT_PACKAGES += \
     ApertureResZeus \
