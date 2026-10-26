@@ -40,3 +40,6 @@ PRODUCT_COPY_FILES += \
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
     $(LOCAL_PATH)
+
+# Miui Camera, when the tree has it
+$(call inherit-product-if-exists, device/xiaomi/miuicamera-cupid/device.mk)
