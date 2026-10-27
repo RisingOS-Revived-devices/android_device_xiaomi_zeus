@@ -4,6 +4,8 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
+import os
+
 from extract_utils.fixups_blob import (
     blob_fixup,
     blob_fixups_user_type,
@@ -15,6 +17,27 @@ from extract_utils.main import (
     ExtractUtils,
     ExtractUtilsModule,
 )
+from extract_utils.tools import patchelf_version_path_map
+from extract_utils.utils import run_cmd
+
+# libTrueSight's GL/EGL imports, renamed to ts6_* and served by libtsegl6 from
+# a private Adreno 0615.95 copy, see vendor/xiaomi/zeus/truesight615.
+TS6_RENAME_MAP = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)),
+    '../../../vendor/xiaomi/zeus/truesight615/ts6_rename.map',
+)
+
+
+def rename_ts6_imports(ctx, file, file_path, *args, **kwargs):
+    run_cmd(
+        [
+            patchelf_version_path_map['0_18'],
+            '--rename-dynamic-symbols',
+            TS6_RENAME_MAP,
+            file_path,
+        ]
+    )
+
 
 namespace_imports = [
     'device/xiaomi/sm8450-common',
@@ -62,6 +85,9 @@ blob_fixups: blob_fixups_user_type = {
     .clear_symbol_version('AHardwareBuffer_lockPlanes')
     .clear_symbol_version('AHardwareBuffer_release')
     .clear_symbol_version('AHardwareBuffer_unlock'),
+    'vendor/lib64/libTrueSight.so': blob_fixup()
+    .call(rename_ts6_imports, need_tmp_dir=False)
+    .add_needed('libtsegl6.so'),
     'vendor/lib64/libcamximageformatutils.so': blob_fixup().replace_needed(
         'vendor.qti.hardware.display.config-V2-ndk_platform.so',
         'vendor.qti.hardware.display.config-V2-ndk.so',
