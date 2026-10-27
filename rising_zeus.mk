@@ -4,6 +4,11 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
+LINEAGE_BUILD := true
+
+# veux's MIUI camera tree is global and clashes with miuicamera-cupid (MiuiCameraOverlay)
+PRODUCT_SOURCE_ROOT_DIRS += -device/xiaomi/camera
+
 # Inherit from zeus device
 $(call inherit-product, device/xiaomi/zeus/device.mk)
 

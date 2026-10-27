@@ -4,6 +4,10 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
+# Rising only sets LINEAGE_BUILD for lineage_* products; without it
+# BoardConfigLineage.mk (kernel, Qcom and soong vars) is skipped.
+LINEAGE_BUILD := true
+
 # Security patch level
 VENDOR_SECURITY_PATCH := 2026-02-01
 
