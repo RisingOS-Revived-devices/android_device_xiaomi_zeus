@@ -1,3 +1,7 @@
 # Xiaomi
 ro.product.mod_device=zeus_global
 ro.product.marketname=Xiaomi 12 Pro
+
+# XiaomiParts
+ro.xiaomiparts.hbm=true
+ro.xiaomiparts.hypercharge.max_watts=120
